@@ -51,7 +51,6 @@ f_passports = passports.filter(p => (Object.keys(p).length > 6 && Object.keys(p)
 f_passports.forEach(passport => {
 	const passport_keys = Object.keys(passport)
 	if (passport_keys.length == 8){
-		validate_keys(passport)
 		valid_passports += mandetory_keys.every(v => passport_keys.includes(v)) && passport_keys.includes(optional_key) && validate_keys(passport);
 	} else {
 		valid_passports += mandetory_keys.every(v => passport_keys.includes(v)) && validate_keys(passport)
