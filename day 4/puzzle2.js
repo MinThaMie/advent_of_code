@@ -19,7 +19,6 @@ textByLine.forEach(line => {
 	}
 })
 
-
 function validate_heights(height) {
 	const type_height = height.slice(-2)
 	if (type_height == "cm") {
@@ -44,17 +43,19 @@ function validate_keys (passport) {
 			eye_colors.includes(passport["ecl"])
 }
 
-
 const mandetory_keys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
 const optional_key = "cid"
-f_passports = passports.filter(p => (Object.keys(p).length > 6 && Object.keys(p).length <= 8))
-f_passports.forEach(passport => {
+
+function validate_passport (passport) {
 	const passport_keys = Object.keys(passport)
 	if (passport_keys.length == 8){
-		valid_passports += mandetory_keys.every(v => passport_keys.includes(v)) && passport_keys.includes(optional_key) && validate_keys(passport);
+		return mandetory_keys.every(v => passport_keys.includes(v)) && passport_keys.includes(optional_key) && validate_keys(passport);;
+	} else if (passport_keys.length == 7) {
+		return mandetory_keys.every(v => passport_keys.includes(v)) && validate_keys(passport);
 	} else {
-		valid_passports += mandetory_keys.every(v => passport_keys.includes(v)) && validate_keys(passport)
+		return false
 	}
-})
+}
 
-console.log(valid_passports)
+f_passports = passports.filter(p => validate_passport(p))
+console.log(f_passports.length)

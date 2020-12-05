@@ -22,13 +22,16 @@ textByLine.forEach(line => {
 
 const mandetory_keys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
 const optional_key = "cid"
-f_passports = passports.filter(p => (p.length > 6 && p.length <= 8))
-f_passports.forEach(passport => {
-	if (passport.length == 8){
-		valid_passports += mandetory_keys.every(v => passport.includes(v)) && passport.includes(optional_key);
-	} else {
-		valid_passports += mandetory_keys.every(v => passport.includes(v))
-	}
-})
 
-console.log(valid_passports)
+function validate_passport (passport) {
+	if (passport.length == 8){
+		return mandetory_keys.every(v => passport.includes(v)) && passport.includes(optional_key);
+	} else if (passport.lengt == 7) {
+		return mandetory_keys.every(v => passport.includes(v))
+	} else {
+		return false
+	}
+}
+
+f_passports = passports.filter(p => validate_passport(p))
+console.log(f_passports.length)
