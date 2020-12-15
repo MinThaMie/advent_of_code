@@ -64,19 +64,18 @@ function solver() {
 			mask = line[1]
 		} else {
 			mem_index = line[0].replace('mem', '').replace('[', '').replace(']', '')
-			value = line[1]
+			value = parseInt(line[1])
 			bit_mem = parseInt(mem_index).toString(2);
 			bit_mem = "0".repeat(36 - bit_mem.length) + bit_mem
 			let maskedMemory = applyMask(bit_mem).join('')
 			let memSlots = calculateMemPossibility(maskedMemory)
+			total += value * memSlots.length
 			memSlots.forEach(slot => {
 				if (memory[slot]){
 					total -= memory[slot]
 					memory[slot] = parseInt(value)
-					total += parseInt(value)
 				} else {
 					memory[slot] = parseInt(value)
-					total += parseInt(value)
 				}
 			})
 		}
